@@ -3,7 +3,7 @@ lio_sam:
   # Topics
   pointCloudTopic: "velodyne_points"          # Point cloud data
   imuTopic: "imu2/data"                        # IMU data
-  odomTopic: "odometry/filtered"                   # IMU pre-preintegration odometry, same frequency as IMU
+  odomTopic: "odometry/imu"                   # IMU pre-preintegration odometry, same frequency as IMU
   gpsTopic: "fix"
 
   # Frames
@@ -29,13 +29,17 @@ lio_sam:
   downsampleRate: 1                           # default: 1. Downsample your data if too many points. i.e., 16 = 64 / 4, 16 = 16 / 1
   lidarMinRange: 1.0                          # default: 1.0, minimum lidar range to be used
   lidarMaxRange: 120.0                       # default: 120.0, maximum lidar range to be used
+  ang_res_x: 0.2
+  ang_res_y: 2.0
+  ang_bottom: 15.0
+  groundScanInd: 7
 
   # IMU Settings
   imuAccNoise: 2.4939570888238808e-02
   imuGyrNoise: 1.5636343949698187e-02
   imuAccBiasN: 6.4356659353532566e-04
   imuGyrBiasN: 3.5640318696367613e-04
-  imuGravity: 9.81
+  imuGravity: 9.79
   imuRPYWeight: 0.01
 
   # Extrinsics (lidar -> IMU)
@@ -77,13 +81,13 @@ lio_sam:
   mappingProcessInterval: 0.15                  # seconds, regulate mapping frequency
 
   # Surrounding map
-  surroundingkeyframeAddingDistThreshold: 0.25 #1.0   # meters, regulate keyframe adding threshold
-  surroundingkeyframeAddingAngleThreshold: 0.05 #0.2  # radians, regulate keyframe adding threshold
-  surroundingKeyframeDensity: 4.0  #2.0              # meters, downsample surrounding keyframe poses   
+  surroundingkeyframeAddingDistThreshold: 1.0   # meters, regulate keyframe adding threshold
+  surroundingkeyframeAddingAngleThreshold: 0.2  # radians, regulate keyframe adding threshold
+  surroundingKeyframeDensity: 2.0               # meters, downsample surrounding keyframe poses   
   surroundingKeyframeSearchRadius: 50.0         # meters, within n meters scan-to-map optimization (when loop closure disabled)
 
   # Loop closure
-  loopClosureEnableFlag: false
+  loopClosureEnableFlag: true
   loopClosureFrequency: 1.0                     # Hz, regulate loop closure constraint add frequency
   surroundingKeyframeSize: 50                   # submap size (when loop closure enabled)
   historyKeyframeSearchRadius: 15.0             # meters, key frame that is within n meters from current pose will be considerd for loop closure
